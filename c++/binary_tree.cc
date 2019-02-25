@@ -49,3 +49,10 @@ void BinaryTree<Type>::Insert(const Type &element)
     else
         prev->right_ = new Node<Type>(element);
 }
+
+template <typename Type>
+void BinaryTree<Type>::BreadthFirst(void)
+{
+
+}
+
