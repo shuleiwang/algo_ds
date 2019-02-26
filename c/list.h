@@ -20,18 +20,45 @@ typedef struct _List
     ListElmt *tail_;
 } List;
 
-#define LIST_SIZE(list) ((list)->size_)
-#define LIST_HEAD(list) ((list)->head_)
-#define LIST_TAIL(list) ((list)->tail_)
-#define LIST_IS_HEAD(list, element) ((element == list->head_) ? 1 : 0)
-#define LIST_IS_TAIL(element) ((element->next_ == NULL) ? 1 : 0)
-#define LIST_DATA(element) (element->data_)
-#define LIST_NEXT(element) (element->next_)
+static inline size_t ListSize(const List *list)
+{
+    return list->size_;
+}
+
+static inline ListElmt* ListHead(const List *list)
+{
+    return list->head_;
+}
+
+static inline ListElmt* ListTail(const List *list)
+{
+    return list->tail_;
+}
+
+static inline int ListIsHead(const List *list, const ListElmt *element)
+{
+    return list->head_ == element;
+}
+
+static inline int ListIsTail(const ListElmt *element)
+{
+    return element->next_ == NULL;
+}
+
+static inline void *ListData(const ListElmt *element)
+{
+    return element->data_;
+}
+
+static inline void *ListNext(const ListElmt *element)
+{
+    return element->next_;
+}
 
 void ListInit(List *list, void (*destory)(void *data));
 void ListDestory(List *list);
 int  ListInsNext(List *list, ListElmt *element, const void *data);
-int  ListRemNext(List *list, ListElmt *element, const void **data);
+int  ListRemNext(List *list, ListElmt *element, void **data);
 
 #endif /* LIST_H */
 
