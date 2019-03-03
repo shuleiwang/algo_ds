@@ -38,12 +38,12 @@ static inline struct list_elmt *list_tail(const struct list *plist)
 static inline int is_list_head(const struct list *plist, 
                                const struct list_elmt *element)
 {
-    return (plist->head == element);
+    return (plist->head == element ? 1 : 0);
 }
 
 static inline int is_list_tail(const struct list_elmt *element)
 {
-    return (element->next == NULL);
+    return (element->next == NULL ? 1 : 0);
 }
 
 static inline void *elmt_data(const struct list_elmt *element)
@@ -51,7 +51,7 @@ static inline void *elmt_data(const struct list_elmt *element)
     return element->data;
 }
 
-static inline void *next_elmt(const struct list_elmt *element)
+static inline struct list_elmt *next_elmt(const struct list_elmt *element)
 {
     return element->next;
 }
