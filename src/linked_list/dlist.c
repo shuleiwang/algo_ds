@@ -38,6 +38,12 @@ void dlist_destory(struct dlist *list)
     memset(list, 0, sizeof(struct dlist));
 }
 
+/**
+ * dlist_ins_next - insert a new element after current element
+ * @list - doubly-linked list pointer
+ * @element - current element
+ * @data - data member pointer
+ */
 int  dlist_ins_next(struct dlist *list,
         struct dlist_elmt *element, const void *data)
 {
@@ -46,7 +52,8 @@ int  dlist_ins_next(struct dlist *list,
     if (element == NULL && dlist_size(list) != 0)
         return -1;
 
-    if ((new_element = (struct dlist_elmt*)malloc(sizeof(struct dlist_elmt))) == NULL)
+    if ((new_element = 
+        (struct dlist_elmt*)malloc(sizeof(struct dlist_elmt))) == NULL)
         return -1;
 
     new_element->data = (void*)data;
@@ -71,9 +78,42 @@ int  dlist_ins_next(struct dlist *list,
     return 0;
 }
 
+/**
+ * dlist_ins_prev - insert a new element before current element
+ * @list - doubly-linked list pointer
+ * @element - current element
+ * @data - data member pointer
+ */
 int  dlist_ins_prev(struct dlist *list,
         struct dlist_elmt *element, const void *data)
 {
+    struct dlist_elmt *new_element = NULL; 
+
+    if (element == NULL && dlist_size(list) != 0)
+        return -1;
+
+    if ((new_element = 
+        (struct dlist_elmt*)malloc(sizeof(struct dlist_elmt))) == NULL)
+        return -1;
+
+    new_element->data = (void*)data;
+
+    if (dlist_size(list) == 0) {
+        list->head = new_element;
+        new_element->next = NULL;
+        new_element->prev = NULL;
+        list->tail = new_element;
+    } else {
+        new_element->next = element;
+        new_element->prev = element->prev;
+        if (is_list_head(element))
+            list->head = new_element;
+        else 
+            element->prev->next = new_element;
+        element->prev = new_element;
+    }
+
+    list->size++;
     return 0;
 }
 
