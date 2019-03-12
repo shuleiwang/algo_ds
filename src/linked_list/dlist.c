@@ -2,7 +2,7 @@
 // dlist.c
 
 #include <string.h>
-#include "dlist.h"
+#include "linked_list/dlist.h"
 
 /**
  * dlist_init - initialize doubly-linked list
@@ -117,8 +117,37 @@ int  dlist_ins_prev(struct dlist *list,
     return 0;
 }
 
+/**
+ * dlist_remove - remove current element from doubly-linked list
+ * @list - doubly-linked list pointer
+ * @element - removed element
+ * @data - data member 
+ */
 int dlist_remove(struct dlist *list, struct dlist_elmt *element, void **data)
 {
+    if (dlist_size(list) == 0 || element == NULL)
+        return -1;
+
+    *data = element->data;
+
+    if (is_list_head(element)) {
+        list->head = element->next;
+        if (list->head == NULL)
+            list->tail = NULL;
+        else 
+            element->next->prev = NULL;
+    } else {
+        element->prev->next = element->next;
+        if (is_list_tail(element))
+            list->tail = element->prev;
+        else
+            element->next->prev = element->prev;
+    }
+
+    free(element);
+
+    list->size--;
+
     return 0;
 }
 

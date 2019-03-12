@@ -1,13 +1,9 @@
 
-CC = clang
-CPPFLAGS = -I include/linked_list
+src_dir := src/linked_list
 
-VPATH = include/linked_list
+.PHONY: all $(src_dir)
+all: $(src_dir)
 
-list.o: list.h
-dlist.o: dlist.h
-
-.PHONY: clean
-clean:
-	-rm -f *.o
+$(src_dir):
+	$(MAKE) --directory=$@
 

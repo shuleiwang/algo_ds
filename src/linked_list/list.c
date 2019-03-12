@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "list.h"
+#include "linked_list/list.h"
 
 /**
  * list_init - initialize list struct
