@@ -26,7 +26,60 @@ void dclist_destory(struct dclist *list)
 int dclist_ins_next(struct dclist *list, 
         struct dclist_elmt *element, const void *data)
 {
+    struct dclist_elmt *new_element = NULL;
 
+    if (element == NULL && dclist_size(list) != 0)
+        return -1;
 
+    if ((new_element = 
+        (struct dclist_elmt*)malloc(sizeof(struct dclist_elmt))) == NULL)
+        return -1;
+
+    new_element->data = (void*)data;
+
+    if (dclist_size(list) == 0) {
+        new_element->next = new_element;
+        new_element->prev = new_element;
+        list->head = new_element;
+    } else {
+        new_element->next = element->next;
+        new_element->prev = element;
+        element->next->prev = new_element;
+        element->next = new_element;
+    }
+
+    list->size++;
+    return 0;
+}
+
+int dclist_ins_prev(struct dclist *list, 
+        struct dclist_elmt *element, const void *data)
+{
+    struct dclist_elmt *new_element = NULL;
+
+    if (element == NULL && dclist_size(list) != 0)
+        return -1;
+
+    if ((new_element = 
+        (struct dclist_elmt*)malloc(sizeof(struct dclist_elmt))) == NULL)
+        return -1;
+
+    new_element->data = (void*)data;
+
+    if (dclist_size(list) == 0) {
+        new_element->next = new_element;
+        new_element->prev = new_element;
+        list->head = new_element;
+    } else {
+        new_element->next = element;
+        new_element->prev = element->prev;
+        if (element == list->head)
+            list->head = new_element;
+        element->prev->next = new_element;
+        element->prev = new_element;
+    }
+
+    list->size++;
+    return 0;
 }
 
