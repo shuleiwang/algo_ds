@@ -1,9 +1,33 @@
 
-src_dir := src/linked_list
+lib_dir := $(CURDIR)/lib/
+inc_dir := $(CURDIR)/include
+sub_dir := src/linked_list
+CC := gcc
+CPPFLAGS := -I $(CURDIR)/include/
+AR := ar
+ARFLAGS := -r
+RANLIB := ranlib
+LD := ld
+MV := mv
+RM := rm -rf
+CP := cp -r
 
-.PHONY: all $(src_dir)
-all: $(src_dir)
+export lib_dir
+export inc_dir
+export CC
+export CPPFLAGS
+export AR
+export ARFLAGS
+export RANLIB
+export LD
+export MV
+export RM
+export CP
 
-$(src_dir):
-	$(MAKE) --directory=$@
+.PHONY: all clean
+all:
+	$(MAKE) --directory=$(sub_dir)
+
+clean:
+	$(MAKE) clean --directory=$(sub_dir)
 

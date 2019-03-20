@@ -1,13 +1,16 @@
 
-CC := clang
-CPPFLAGS := -I ../../include/
+lib := liblinkedlist.a
+sources := list.c dlist.c sclist.c dclist.c
+objects := $(subst .c,.o,$(sources))
 
-.PHONY: all clean
-all: list.o dlist.o sclist.o
+$(lib): $(objects)
+	$(AR) $(ARFLAGS) $@ $^
+	$(RANLIB) $@
+	$(MV) $(lib) $(lib_dir)
+
+$(objects): $(inc_dir)/linked_list/
+
+.PHONY: clean
 clean:
-	rm *.o
-
-list.o: ../../include/linked_list/list.h
-dlist.o: ../../include/linked_list/dlist.h
-sclist.o: ../../include/linked_list/sclist.h
+	-$(RM) $(objects) $(lib)
 
