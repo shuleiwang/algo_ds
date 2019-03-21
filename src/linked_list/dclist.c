@@ -2,8 +2,7 @@
 // dclist.c
 
 #include <string.h>
-#include "../../include/linked_list/dclist.h"
-
+#include "linked_list/dclist.h"
 
 void dclist_init(struct dclist *list, void (*destory)(void *data))
 {
@@ -80,6 +79,29 @@ int dclist_ins_prev(struct dclist *list,
     }
 
     list->size++;
+    return 0;
+}
+
+int dclist_remove(struct dclist *list, struct dclist_elmt *element, void **data)
+{
+    if (dclist_size(list) == 0 || element == NULL)
+        return -1;
+
+    *data = element->data;
+
+    if (element->next == element) {
+        list->head = NULL;
+    } else {
+        element->prev->next = element->next;
+        element->next->prev = element->prev;
+        if (list->head == element) 
+            list->head = element->next;
+    }
+
+    free(element);
+
+    list->size--;
+
     return 0;
 }
 

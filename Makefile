@@ -30,4 +30,5 @@ all:
 
 clean:
 	$(MAKE) clean --directory=$(sub_dir)
+	$(RM) $(lib_dir)*.*
 
