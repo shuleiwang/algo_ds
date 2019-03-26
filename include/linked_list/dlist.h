@@ -58,11 +58,46 @@ static inline struct dlist_elmt *prev_elmt(const struct dlist_elmt *element)
     return element->prev;
 }
 
+/**
+ * dlist_init - initialize doubly-linked list
+ * @list - doubly-linked list pointer
+ * @destory - function pointer which provides a way to free data space
+ *
+ * Must call before use doubly-linked list
+ */
 void dlist_init(struct dlist *list, void (*destory)(void *data));
+
+/**
+ * dlist_destory - destory doubly-linked list
+ * @list - doubly-linked list pointer
+ *
+ * Remove all elements from doubly-linked list
+ */
 void dlist_destory(struct dlist *list);
+
+/**
+ * dlist_ins_next - insert a new element after current element
+ * @list - doubly-linked list pointer
+ * @element - current element
+ * @data - data member pointer
+ */
 int  dlist_ins_next(struct dlist *list, 
         struct dlist_elmt *element, const void *data);
+
+/**
+ * dlist_ins_prev - insert a new element before current element
+ * @list - doubly-linked list pointer
+ * @element - current element
+ * @data - data member pointer
+ */
 int  dlist_ins_prev(struct dlist *list,
         struct dlist_elmt *element, const void *data);
+
+/**
+ * dlist_remove - remove current element from doubly-linked list
+ * @list - doubly-linked list pointer
+ * @element - removed element
+ * @data - data member 
+ */
 int dlist_remove(struct dlist *list, struct dlist_elmt *element, void **data);
 

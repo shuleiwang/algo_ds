@@ -56,10 +56,41 @@ static inline struct list_elmt *next_elmt(const struct list_elmt *element)
     return element->next;
 }
 
+/**
+ * list_init - initialize list struct
+ * @plist - list pointer
+ * @data - destory routine of data member
+ *
+ * Must call before use a list.
+ */
 void list_init(struct list *plist, void (*destory)(void *data));
+
+/**
+ * list_destory - destory list struct
+ * @plist - list pointer
+ *
+ * Destory and free list space.
+ */
 void list_destory(struct list *plist);
+
+/**
+ * list_ins_next - insert an element into list after current element
+ * @plist - list pointer
+ * @element - current element 
+ * @          if it is NULL, insert new element to head of the list.
+ * @data - data member pointer
+ * @retval - 0 if inserting the is element successful, or -1 otherwise.
+ */
 int  list_ins_next(struct list *plist, 
         struct list_elmt *element, const void *data);
+
+/**
+ * list_rem_next - remove an element from list after current element
+ * @plist - list pointer
+ * @element - current element
+ * @          if it is NULL, remove an element from head of list 
+ * @retval - 0 if removing the element is successful, or -1 otherwise.
+ */
 int  list_rem_next(struct list *plist, 
         struct list_elmt *element, void **pdata);
 

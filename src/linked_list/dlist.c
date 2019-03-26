@@ -4,13 +4,6 @@
 #include <string.h>
 #include "linked_list/dlist.h"
 
-/**
- * dlist_init - initialize doubly-linked list
- * @list - doubly-linked list pointer
- * @destory - function pointer which provides a way to free data space
- *
- * Must call before use doubly-linked list
- */
 void dlist_init(struct dlist *list, void (*destory)(void *data))
 {
     list->size = 0;
@@ -19,12 +12,6 @@ void dlist_init(struct dlist *list, void (*destory)(void *data))
     list->tail = NULL;
 }
 
-/**
- * dlist_destory - destory doubly-linked list
- * @list - doubly-linked list pointer
- *
- * Remove all elements from doubly-linked list
- */
 void dlist_destory(struct dlist *list)
 {
     void *data = NULL;
@@ -38,12 +25,6 @@ void dlist_destory(struct dlist *list)
     memset(list, 0, sizeof(struct dlist));
 }
 
-/**
- * dlist_ins_next - insert a new element after current element
- * @list - doubly-linked list pointer
- * @element - current element
- * @data - data member pointer
- */
 int  dlist_ins_next(struct dlist *list,
         struct dlist_elmt *element, const void *data)
 {
@@ -78,12 +59,6 @@ int  dlist_ins_next(struct dlist *list,
     return 0;
 }
 
-/**
- * dlist_ins_prev - insert a new element before current element
- * @list - doubly-linked list pointer
- * @element - current element
- * @data - data member pointer
- */
 int  dlist_ins_prev(struct dlist *list,
         struct dlist_elmt *element, const void *data)
 {
@@ -117,12 +92,6 @@ int  dlist_ins_prev(struct dlist *list,
     return 0;
 }
 
-/**
- * dlist_remove - remove current element from doubly-linked list
- * @list - doubly-linked list pointer
- * @element - removed element
- * @data - data member 
- */
 int dlist_remove(struct dlist *list, struct dlist_elmt *element, void **data)
 {
     if (dlist_size(list) == 0 || element == NULL)
