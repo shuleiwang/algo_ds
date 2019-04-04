@@ -1,7 +1,8 @@
 
 lib_dir := $(CURDIR)/lib/
 inc_dir := $(CURDIR)/include
-sub_dir := src/linked_list
+sub_dir := src/linked_list src/hash_table
+
 CC := gcc
 CPPFLAGS := -I $(CURDIR)/include/
 AR := ar
@@ -24,11 +25,8 @@ export MV
 export RM
 export CP
 
-.PHONY: all clean
-all:
-	$(MAKE) --directory=$(sub_dir)
-
-clean:
-	$(MAKE) clean --directory=$(sub_dir)
-	$(RM) $(lib_dir)*.*
+.PHONY: all clean $(sub_dir)
+all: $(sub_dir)
+$(sub_dir):
+	$(MAKE) --directory=$@
 

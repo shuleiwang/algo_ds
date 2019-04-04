@@ -79,7 +79,7 @@ void list_destory(struct list *plist);
  * @element - current element 
  * @          if it is NULL, insert new element to head of the list.
  * @data - data member pointer
- * @retval - 0 if inserting the is element successful, or -1 otherwise.
+ * @retval - 0 if inserting this element successful, or -1 otherwise.
  */
 int  list_ins_next(struct list *plist, 
         struct list_elmt *element, const void *data);
