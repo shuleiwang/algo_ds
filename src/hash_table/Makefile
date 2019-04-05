@@ -4,7 +4,7 @@ sources := chash_table.c
 objects := $(subst .c,.o,$(sources))
 
 $(lib): $(objects)
-	$(AR) $(ARFLAGS) $@ $^
+	$(AR) $@ $^
 	$(RANLIB) $@
 	$(MV) $(lib) $(lib_dir)
 
