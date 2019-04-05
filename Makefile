@@ -27,6 +27,7 @@ export CP
 
 .PHONY: all $(src_dir)
 all: $(src_dir)
+	$(if $(TARGET), $(RM) $(lib_dir)/*.a)
 
 $(src_dir):
 	$(silent)$(MAKE) --directory=$@ $(TARGET)
