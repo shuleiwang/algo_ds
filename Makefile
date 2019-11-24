@@ -1,12 +1,12 @@
 
 lib_dir := $(CURDIR)/lib
-inc_dir := $(CURDIR)/include
-src_dir := src/linked_list src/hash_table 
+inc_dir := $(CURDIR)/inc
+src_dir := $(CURDIR)/src/sort_algo 
 
 silent := @
 
 CC := $(silent)gcc
-CPPFLAGS := -I $(CURDIR)/include
+CPPFLAGS := -I $(CURDIR)/inc
 AR := $(silent)ar -r
 RANLIB := $(silent)ranlib
 LD := $(silent)ld
@@ -27,8 +27,7 @@ export CP
 
 .PHONY: all $(src_dir)
 all: $(src_dir)
-	$(if $(TARGET), $(RM) $(lib_dir)/*.a)
 
 $(src_dir):
 	$(silent)$(MAKE) --directory=$@ $(TARGET)
- 
+
