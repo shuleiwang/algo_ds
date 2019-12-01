@@ -3,7 +3,7 @@ lib_dir := $(CURDIR)/lib
 inc_dir := $(CURDIR)/inc
 src_dir := $(CURDIR)/src/sort_algo 
 
-silent := @
+silent :=
 
 CC := $(silent)gcc
 CPPFLAGS := -I $(CURDIR)/inc

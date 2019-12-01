@@ -1,5 +1,5 @@
 /*
- * count_sort.c - Count sorting implementation.
+ * count_sort.c - count sort implementation.
  *
  * This file is public domain.
  */
@@ -13,8 +13,12 @@ int count_sort(struct sort_ctx *ctx)
 {
     uint32 *in = (uint32*)ctx->in;
     uint32 *out = (uint32*)ctx->out;
+    if (in == 0 || out == 0)
+    {
+        return ERR_INVALID;
+    }
 
-    /* get the maximum and minimum values of the input sequence */
+    /* get the maximum and minimum values of the input array */
     uint32 min = in[0];
     uint32 max = in[0];
     for (uint32 idx = 1; idx < ctx->size; ++idx)
@@ -23,7 +27,6 @@ int count_sort(struct sort_ctx *ctx)
         {
             min = in[idx];
         }
-
         if (in[idx] > max)
         {
             max = in[idx];
@@ -42,8 +45,8 @@ int count_sort(struct sort_ctx *ctx)
     }
 
     /*
-     * 3. accumulate count array in sorted order to 
-     * identify the position of each element
+     * accumulate count array in sorted order to 
+     *      identify the position of each element
      */
     uint32 sum = 0;
     uint32 fix_idx = 0;
@@ -54,7 +57,7 @@ int count_sort(struct sort_ctx *ctx)
         count_array[fix_idx] = sum;
     }
 
-    /* 4. output sorted array according to sorting stability */
+    /* output sorted array according to sorting stability */
     for (uint32 idx = 0; idx < ctx->size; ++idx)
     {
         fix_idx = (ctx->stability == UNSTABLE) ? idx : (ctx->size - 1 - idx);
@@ -62,7 +65,7 @@ int count_sort(struct sort_ctx *ctx)
         count_array[in[fix_idx] - min]--;
     }
 
-    /* 5. free count array memory */
+    /* free count array memory */
     arch_free(count_array);
     count_array = 0;
     return ERR_OK;
