@@ -7,36 +7,35 @@
 #ifndef __SORT_H
 #define __SORT_H
 
-#include "arch.h"
+#include "env.h"
 
-enum sort_algo 
-{
+/* sort method */ 
+enum {
     COUNT_SORTING, 
     INVALID_ALGO,
 };
 
-enum sort_order 
-{
+/* sort order */
+enum {
     ASCENDING = 0,
     DESCEDING,
 };
 
-enum sort_stability
-{
+/* sort stability */
+enum {
     UNSTABLE = 0,
     STABLE,
 };
 
-struct sort_ctx
-{
-    void *in;
+struct sort_ctx {
+    void   *in;
     uint32 size;
-    enum sort_order order; 
-    enum sort_stability stability;
-    void *out;
+    uint32 order; 
+    uint32 stability;
+    void   *out;
 };
 
-int sort(enum sort_algo algo, struct sort_ctx *ctx);
+int sort(uint32 sort_algo, struct sort_ctx *ctx);
 
 #endif /* __SORT_H */
 

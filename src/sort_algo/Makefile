@@ -1,5 +1,5 @@
 
-sources := sort.c count_sort.c
+sources := $(wildcard *.c)
 objects := $(subst .c,.o,$(sources))
 
 $(objects) : $(sources)

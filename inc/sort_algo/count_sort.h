@@ -11,7 +11,7 @@
 
 /**
  * count_sort - unsigned integer sorting based on counting
- * @ctx: sorting descriptor
+ * @ctx: sorting context
  *
  * Note: 
  * 1. 只支持无符号整数排序

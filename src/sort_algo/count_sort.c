@@ -4,7 +4,8 @@
  * This file is public domain.
  */
 
-#include "arch.h"
+#include "env.h"
+#include "errval.h"
 #include "sort_algo/sort.h"
 #include "sort_algo/count_sort.h"
 
@@ -13,7 +14,7 @@ int count_sort(struct sort_ctx *ctx)
     uint32 *in = (uint32*)ctx->in;
     uint32 *out = (uint32*)ctx->out;
 
-    /* 1. 获取输入序列的最大值和最小值 */
+    /* get the maximum and minimum values of the input sequence */
     uint32 min = in[0];
     uint32 max = in[0];
     for (uint32 idx = 1; idx < ctx->size; ++idx)
@@ -22,54 +23,48 @@ int count_sort(struct sort_ctx *ctx)
         {
             min = in[idx];
         }
-        else if (in[idx] > max)
+
+        if (in[idx] > max)
         {
             max = in[idx];
         }
     }
 
-    /* 2. 分配统计数组并填充，空间大小为: (max - min + 1) */
-    uint32 *count_array = (uint32*)SPEC_MALLOC(max - min + 1);
+    /* calloc a count array of size (MAX - MIN + 1) and then fill it */
+    uint32 *count_array = (uint32*)arch_malloc(max - min + 1);
+    if (count_array == 0)
+    {
+        return ERR_MEM;
+    }
     for (uint32 idx = 0; idx < ctx->size; ++idx)
     {
         count_array[in[idx] - min]++;
     }
 
-    /* 3. 如果需要稳定排序，对统计数组做变形，标识每一个元素的位置 */
+    /*
+     * 3. accumulate count array in sorted order to 
+     * identify the position of each element
+     */
     uint32 sum = 0;
-    if (ctx->stability == STABLE)
+    uint32 fix_idx = 0;
+    for (uint32 idx = 0; idx <= (max - min); ++idx)
     {
-        for (uint32 idx = 0; idx <= (max - min); ++idx)
-        {
-            idx = (ctx->order == ASCENDING) ? idx : (max - min - idx);
-            sum += count_array[idx];
-            count_array[idx] = sum;
-        }
+        fix_idx = (ctx->order == ASCENDING) ? idx : (max - min - idx);
+        sum += count_array[fix_idx];
+        count_array[fix_idx] = sum;
     }
 
-    /* 4. 输出已排序好的数组 */
-    if (ctx->stability == UNSTABLE)
+    /* 4. output sorted array according to sorting stability */
+    for (uint32 idx = 0; idx < ctx->size; ++idx)
     {
-        uint32 out_idx = 0;
-        for (uint32 idx = 0; idx <= max - min; ++idx)
-        {
-            idx = (ctx->order == ASCENDING) ? idx : (max - min - idx);
-            for (uint32 idx1 = 0; idx1 < count_array[idx]; ++idx1)
-            {
-                out[out_idx++] = idx + min;
-            }
-        }
-    }
-    else if (ctx->stability == STABLE)
-    {
-        for (uint32 idx = 0; idx < ctx->size; ++idx)
-        {
-            out[count_array[in[idx] - min] - 1] = in[idx];
-            count_array[in[idx] - min]--;
-        }
+        fix_idx = (ctx->stability == UNSTABLE) ? idx : (ctx->size - 1 - idx);
+        out[count_array[in[fix_idx] - min] - 1] = in[fix_idx];
+        count_array[in[fix_idx] - min]--;
     }
 
-    SPEC_FREE(count_array);
-    return 0;
+    /* 5. free count array memory */
+    arch_free(count_array);
+    count_array = 0;
+    return ERR_OK;
 }
 
