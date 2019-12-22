@@ -34,7 +34,7 @@ int count_sort(struct sort_ctx *ctx)
     }
 
     /* calloc a count array of size (MAX - MIN + 1) and then fill it */
-    uint32 *count_array = (uint32*)arch_malloc(max - min + 1);
+    uint32 *count_array = (uint32*)arch_calloc(max - min + 1, sizeof(uint32));
     if (count_array == 0)
     {
         return ERR_MEM;

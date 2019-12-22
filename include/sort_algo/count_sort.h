@@ -14,9 +14,9 @@
  * @ctx: sorting context
  *
  * Note: 
- * 1. 只支持无符号整数排序
- * 2. 被排序的序列的最大值和最小值之间的差值不能超过进程堆大小
- * 3. 输入和输出序列可以指向同一位置
+ * 1. Only supports unsigned integer sorting
+ * 2. The difference between the maximum and minimum of the sorted sequence 
+ *    cannot exceed the process heap size
  */
 int count_sort(struct sort_ctx *ctx);
 

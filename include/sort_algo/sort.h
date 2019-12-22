@@ -18,7 +18,7 @@ enum {
 /* sort order */
 enum {
     ASCENDING = 0,
-    DESCEDING,
+    DESCENDING,
 };
 
 /* sort stability */

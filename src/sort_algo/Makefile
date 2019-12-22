@@ -13,4 +13,5 @@ all : libsort.a
 
 clean :
 	$(RM) $(objects)
+	$(RM) $(lib_dir)/libsort.a
 
